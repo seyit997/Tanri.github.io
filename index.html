@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        #simulation {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        img {
+            width: 50%; /* Resim boyutunu %50 olarak ayarla */
+            border-radius: 10px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div id="simulation">
+    <h1>tanrı simülasyonu</h1>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRekvGb3shJ455aGGeRA-UAPgzik5Pimt6wVcEffL12df5UuRUGYfWsiFJ6&s=10" alt="Earth">
+    <p>Zaman: <span id="time">2024</span></p>
+    <p>Nüfus: <span id="population">1000</span></p>
+    <p>İbadet Edenler: <span id="worshippers">100</span></p>
+    <button onclick="sendProphet()">Peygamber Gönder</button>
+    <button onclick="sendPlague()">Hastalık Gönder</button>
+    <button onclick="sendEarthquake()">Deprem Yarat</button>
+    <button onclick="changeWeather()">Hava Durumu Değiştir</button>
+    <button onclick="sendAngel()">Melek Gönder</button>
+    <button onclick="sendFood()">Sofra Gönder</button>
+    <button onclick="advanceTime()">Zaman Geç</button>
+    <button onclick="destroyWorld()">Dünyayı Yok Et</button>
+    <div id="log"></div>
+</div>
+
+<script>
+    let time = 2024;
+    let population = 1000;
+    let worshippers = 100;
+
+    function logMessage(message) {
+        const logDiv = document.getElementById('log');
+        const newMessage = document.createElement('p');
+        newMessage.textContent = message;
+        logDiv.prepend(newMessage);
+    }
+
+    function sendProphet() {
+        worshippers += 50;
+        logMessage("📜 Bir peygamber gönderdiniz. İbadet edenler artıyor!");
+        updateDisplay();
+    }
+
+    function sendPlague() {
+        const deathCount = Math.floor(population * 0.1);
+        population -= deathCount;
+        worshippers -= Math.min(worshippers, deathCount);
+        logMessage("😷 Bir hastalık gönderdiniz. İnsanlar ölüyor!");
+        updateDisplay();
+    }
+
+    function sendEarthquake() {
+        const deathCount = Math.floor(population * 0.15);
+        population -= deathCount;
+        worshippers -= Math.min(worshippers, Math.floor(worshippers * 0.2));
+        logMessage("🌍 Bir deprem yarattınız. İnsanlar ölüyor ve ibadet edenler azalıyor!");
+        updateDisplay();
+    }
+
+    function changeWeather() {
+        const weathers = ['Fırtınalı', 'Açık', 'Yağmurlu', 'Karlı', 'Sıcak'];
+        const weather = weathers[Math.floor(Math.random() * weathers.length)];
+        logMessage(`🌤️ Hava durumu şimdi: ${weather}`);
+    }
+
+    function sendAngel() {
+        worshippers += 20;
+        logMessage("😇 Bir melek gönderdiniz. İnsanlar mutlu!");
+        updateDisplay();
+    }
+
+    function sendFood() {
+        worshippers += 10;
+        logMessage("🍽️ Sofra gönderdiniz. İnsanlar mutlu!");
+        updateDisplay();
+    }
+
+    function advanceTime() {
+        time += Math.floor(Math.random() * 5) + 1;
+        logMessage(`🕒 Zaman geçiyor... Yeni tarih: ${time}`);
+        updateDisplay();
+    }
+
+    function destroyWorld() {
+        population = 0;
+        worshippers = 0;
+        logMessage("🔥 Dünyayı yok ettiniz!");
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        // İbadet eden sayısı nüfusu geçemez
+        if (worshippers > population) {
+            worshippers = population;
+        }
+        document.getElementById('time').textContent = time;
+        document.getElementById('population').textContent = population;
+        document.getElementById('worshippers').textContent = worshippers;
+    }
+</script>
+
+</body>
+  </html>
